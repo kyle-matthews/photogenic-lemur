@@ -1,5 +1,5 @@
 # `fly launch --copy-config --no-deploy` fills in your own app name.
-app = "wedding-album"
+app = "laura-and-kyle"
 primary_region = "lhr" # where the app and its volume live (`fly platform regions` lists them)
 kill_timeout = 30      # give in-flight uploads time to finish during a redeploy
 

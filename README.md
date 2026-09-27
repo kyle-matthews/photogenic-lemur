@@ -104,7 +104,8 @@ You'll need `flyctl`, signed in with `fly auth login`.
    npm run qr -- https://<name>.fly.dev
    ```
 
-   This writes `qr-code.svg` (print this one) and `qr-code.png`, with your guest code built in.
+   This writes `qr-code.svg` (print this one), `qr-code.png`, and `qr-code-transparent.png` for
+   printing straight onto a light-coloured card, all with your guest code built in.
    Scan it with an iPhone *and* an Android before printing, and print the code in small type
    underneath in case someone's camera won't scan it.
 

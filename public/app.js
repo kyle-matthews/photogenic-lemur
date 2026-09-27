@@ -252,8 +252,9 @@ function setTotal(total) {
   el.count.textContent = plural(total, 'photo');
 }
 
-/** Inserts photos in album order (newest first), skipping any already shown. */
+/** Inserts photos in album order (newest first), skipping any already shown. Returns how many were new. */
 function addPhotos(photos, { fresh = false } = {}) {
+  let added = 0;
   for (const photo of photos) {
     if (state.tiles.has(photo.id)) continue;
     let index = state.photos.findIndex((p) => p.seq < photo.seq);
@@ -262,8 +263,10 @@ function addPhotos(photos, { fresh = false } = {}) {
     state.photos.splice(index, 0, photo);
     state.tiles.set(photo.id, tile);
     el.grid.insertBefore(tile, el.grid.children[index] ?? null);
+    added++;
   }
   albumChanged();
+  return added;
 }
 
 function removePhoto(id) {
@@ -360,7 +363,7 @@ function typeOf(file) {
 function enqueue(file) {
   const item = { file, type: typeOf(file), status: 'waiting', photoId: null, previews: undefined, thumbUrl: null };
   item.el = document.createElement('li');
-  item.el.innerHTML = '<img class="q-thumb" alt=""><div><p class="q-status"></p><div class="q-bar"><i></i></div></div><span></span>';
+  item.el.innerHTML = '<span class="q-thumb"></span><div><p class="q-status"></p><div class="q-bar"><i></i></div></div><span></span>';
   queue.push(item);
   el.queue.append(item.el);
   setItem(item, 'waiting', 'Waiting…');
@@ -410,9 +413,12 @@ async function uploadItem(item) {
     if (item.previews === undefined) {
       setItem(item, 'working', 'Preparing…');
       item.previews = await oneAtATime(() => makePreviews(item.file)).catch(() => null);
+      const thumb = item.el.querySelector('.q-thumb');
       if (item.previews) {
         item.thumbUrl = URL.createObjectURL(item.previews.thumb);
-        item.el.querySelector('.q-thumb').src = item.thumbUrl;
+        thumb.style.backgroundImage = `url("${item.thumbUrl}")`;
+      } else {
+        thumb.innerHTML = CAMERA_ICON;
       }
     }
     if (!item.photoId) {
@@ -423,7 +429,7 @@ async function uploadItem(item) {
     const { photo } = await withRetries(() => sendOriginal(item), onRetry);
     item.previews = null;
     setItem(item, 'done', 'In the album');
-    addPhotos([photo], { fresh: true });
+    if (addPhotos([photo], { fresh: true })) setTotal(state.total + 1);
   } catch (err) {
     item.retryable = Boolean(err.retryable);
     setItem(item, 'failed', err.message);

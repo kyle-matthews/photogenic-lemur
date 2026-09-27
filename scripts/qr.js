@@ -15,7 +15,16 @@ const text = url.toString();
 // Level Q survives a smudge or a small print size, and a short URL keeps the code simple.
 await QRCode.toFile('qr-code.svg', text, { type: 'svg', errorCorrectionLevel: 'Q', margin: 2 });
 await QRCode.toFile('qr-code.png', text, { type: 'png', errorCorrectionLevel: 'Q', margin: 2, width: 1500 });
+// Transparent background, for printing straight onto a light-coloured card.
+await QRCode.toFile('qr-code-transparent.png', text, {
+  type: 'png',
+  errorCorrectionLevel: 'Q',
+  margin: 2,
+  width: 1500,
+  color: { dark: '#000000ff', light: '#00000000' },
+});
 
 console.log(`QR code for ${text}`);
-console.log('Saved qr-code.svg (best for printing) and qr-code.png. Scan it with a phone before you print!');
+console.log('Saved qr-code.svg (best for printing), qr-code.png and qr-code-transparent.png.');
+console.log('Scan it with a phone before you print!');
 if (!process.env.GUEST_CODE) console.log('Note: no GUEST_CODE set, so the code opens an album anyone can use.');
