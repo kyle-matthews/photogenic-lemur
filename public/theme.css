@@ -1,0 +1,32 @@
+/*
+  ✎ THEME: everything you need to restyle the album for your wedding.
+
+  Fonts: pick two at https://fonts.google.com, replace the @import URL, then update
+  --font-display (names and headings) and --font-body (everything else).
+  Colours: the "seal" colours drive the upload button and accents; the rest is paper and ink.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Jost:wght@400..600&display=swap');
+
+:root {
+  /* Type */
+  --font-display: 'Bodoni Moda', 'Bodoni 72', Didot, 'Times New Roman', serif;
+  --font-body: 'Jost', Futura, 'Avenir Next', 'Century Gothic', 'Trebuchet MS', sans-serif;
+  --names-size: clamp(3.25rem, 16vw, 8rem); /* make this smaller if your names are long */
+
+  /* Paper and ink */
+  --paper: #f4eee4;    /* page background */
+  --card: #fbf8f2;     /* the upload card */
+  --tile: #e8dfd1;     /* photo placeholders */
+  --ink: #231f1b;      /* main text */
+  --ink-soft: #6f655a; /* secondary text */
+  --rule: #b59a6d;     /* hairlines and the little star */
+
+  /* The wax seal (upload button) and accents */
+  --seal: #7c2e28;
+  --seal-light: #a8483d;
+  --seal-dark: #4f1a16;
+  --on-seal: #f6e7dc;  /* lettering on the seal */
+
+  /* The photo viewer */
+  --darkroom: #16120f;
+}
