@@ -1,0 +1,39 @@
+# `fly launch --copy-config --no-deploy` fills in your own app name.
+app = "laura-and-kyle"
+primary_region = "lhr" # where the app and its volume live (`fly platform regions` lists them)
+kill_timeout = 30      # give in-flight uploads time to finish during a redeploy
+
+[env]
+  DATA_DIR = "/data"
+  MAX_UPLOAD_MB = "50"
+
+# The photo list (a small SQLite database) lives on this volume, which means the app must run
+# as exactly one Machine: deploy with `fly deploy --ha=false`. The photos are in Tigris.
+[mounts]
+  source = "album_data"
+  destination = "/data"
+  initial_size = "1gb"
+  snapshot_retention = 30 # days of daily backups to keep (Fly's default is 5)
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0 # set to 1 for the wedding weekend so nobody waits for a cold start
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 200
+    hard_limit = 250
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    path = "/healthz"
+    timeout = "5s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

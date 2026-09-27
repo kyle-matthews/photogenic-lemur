@@ -1,0 +1,22 @@
+{
+  "name": "wedding-album",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch --env-file-if-exists=.env server/index.js",
+    "download": "node --env-file-if-exists=.env scripts/download.js",
+    "qr": "node --env-file-if-exists=.env scripts/qr.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1141.0",
+    "@hono/node-server": "^2.1.1",
+    "hono": "^4.13.9"
+  },
+  "devDependencies": {
+    "qrcode": "^1.5.4"
+  }
+}

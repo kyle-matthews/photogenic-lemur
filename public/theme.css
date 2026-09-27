@@ -1,0 +1,32 @@
+/*
+  ✎ THEME: the album's fonts and colours, matched to Laura & Kyle's invitations:
+  white foil on black linen card, with classical engraved capitals.
+
+  Fonts: pick two at https://fonts.google.com, replace the @import URL, then update
+  --font-display (names, headings and labels) and --font-body (everything else).
+*/
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&family=EB+Garamond:ital,wght@0,400..600;1,400..600&display=swap');
+
+:root {
+  /* Type */
+  --font-display: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif;
+  --font-body: 'EB Garamond', Garamond, 'Times New Roman', serif;
+
+  /* Card and foil */
+  --paper: #1b1b1d;    /* page background: the black card */
+  --card: #212123;     /* the upload card */
+  --tile: #2b2b2e;     /* photo placeholders */
+  --ink: #f1efe9;      /* main text: white foil */
+  --ink-soft: #aaa8a2; /* secondary text */
+  --rule: #d8d6cf;     /* hairlines, frames, stars and the sunburst */
+  --danger: #e7a193;   /* error messages */
+
+  /* The wax seal (upload button): silver */
+  --seal: #cfcdc6;
+  --seal-light: #f7f6f2;
+  --seal-dark: #85847f;
+  --on-seal: #1b1b1d;  /* the camera and stars on the seal */
+
+  /* The photo viewer */
+  --darkroom: #111112;
+}
